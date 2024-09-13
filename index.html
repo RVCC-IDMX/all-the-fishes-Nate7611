@@ -37,7 +37,8 @@
         fish1.scale.set(0.30);
         fish1.anchor.x = 0.5;
         fish1.anchor.y = 0.5;
-        fish1.x = 900;
+        fish1.x = 1000;
+        fish1.y = 1000;
 
     let fish2 = PIXI.Sprite.from("img/fish2.png");
         fish2.scale.set(0.05);
@@ -59,34 +60,48 @@
     //Counter
     let counter = 0;
 
+    let aiTimer = 0;
+    let cycleCount = 500;
+    let cycle = 1;
+
     function moveRight(fish) {
-        if (!(fish.x > (width - ((fish.width / 2) + 40)))) {
+        if (!(fish.x > (width - ((fish.width / 2))))) {
             fish.x++;
-            console.log(fish.x)
         }
     }
 
     function moveLeft(fish) {
-        if (!(fish.x < (0 + ((fish.width / 2) + 40)))) {
+        if (!(fish.x < (0 + ((fish.width / 2))))) {
             fish.x--;
-            console.log(fish.width)
+        }
+    }
+
+    function moveUp(fish) {
+        if (!(fish.y < (0 + ((fish.height / 2))))) {
+            fish.y--;
+        }
+    }
+
+    function moveDown(fish) {
+        if (!(fish.y > (height - ((fish.height / 2))))) {
+            fish.y++;
         }
     }
 
     //Animation loop
     function loop() {
         counter++;
+        aiTimer++;
 
-        fish1.y = (Math.sin(counter/80) * 20) + 325;
-        fish1.scale.x = ((Math.sin(counter/100) * -.01) + .30);
-        fish1.angle = (Math.sin(counter/80) * 2);
+        //fish1.y = (Math.sin(counter/80) * 20) + 325;
+        //fish1.scale.x = ((Math.sin(counter/100) * -.01) + .30);
+        //fish1.angle = (Math.sin(counter/80) * 2);
 
         fish2.y = (Math.sin(counter/70) * 30) + 100;
         fish2.scale.x = ((Math.sin(counter/150) * -.01) + -.06);
         fish2.angle = (Math.sin(counter/40) * -2);
 
-        moveLeft(fish1);
-        moveRight(fish2);
+        moveUp(fish1);
 
         requestAnimationFrame(loop);
     }
