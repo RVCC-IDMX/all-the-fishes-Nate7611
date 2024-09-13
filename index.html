@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All the Fishes</title>
+    <script src="https://pixijs.download/release/pixi.js"></script>
+</head>
+<body>
+
+<script type="module">
+
+    //The App
+    const app = new PIXI.Application();
+    await app.init({
+        width: 640,
+        height: 480,
+        backgroundColor: 0x000000
+    });
+
+    //Add view to the body
+    document.body.appendChild(app.canvas);
+
+    //Expose the app to document
+    window.app = app;
+
+    //Load in sprite
+    await PIXI.Assets.load("img/fish1.png");
+    await PIXI.Assets.load("img/fish2.png");
+
+    //Add out first sprite
+    let fish1 = PIXI.Sprite.from("img/fish1.png");
+        fish1.scale.set(0.20);
+        fish1.anchor.x = 0.5;
+        fish1.anchor.y = 0.5;
+        fish1.x = 300;
+
+    let fish2 = PIXI.Sprite.from("img/fish2.png");
+        fish2.scale.set(0.10);
+        fish2.anchor.x = 0.5;
+        fish2.anchor.y = 0.5;
+        fish2.x = 300;
+
+    //Add it to stage
+    //app.stage.addChild(fish1);
+    //app.stage.addChild(fish2);
+
+    //Fish container
+    let fishContainer = new PIXI.Container();
+        fishContainer.addChild(fish1);
+        fishContainer.addChild(fish2);
+
+    app.stage.addChild(fishContainer);
+
+    //Counter
+    let counter = 0;
+
+    //Animation loop
+    function loop() {
+        counter++;
+
+        fish1.y = (Math.sin(counter/40) * 20) + 325;
+        fish1.scale.x = ((Math.sin(counter/40) * -.01) + .20);
+        fish1.angle = (Math.sin(counter/40) * 5);
+
+        fish2.y = (Math.sin(counter/50) * 30) + 100;
+        fish2.scale.x = ((Math.sin(counter/40) * -.01) + -.09);
+
+        requestAnimationFrame(loop);
+    }
+
+    loop();
+
+</script>
+
+</body>
+</html>
