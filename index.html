@@ -59,10 +59,8 @@
 
     //Counter
     let counter = 0;
-
-    let aiTimer = 0;
-    let cycleCount = 500;
-    let cycle = 1;
+    let hitRight1 = false;
+    let hitRight2 = false;
 
     function moveRight(fish) {
         if (!(fish.x > (width - ((fish.width / 2))))) {
@@ -91,17 +89,48 @@
     //Animation loop
     function loop() {
         counter++;
-        aiTimer++;
 
-        //fish1.y = (Math.sin(counter/80) * 20) + 325;
-        //fish1.scale.x = ((Math.sin(counter/100) * -.01) + .30);
-        //fish1.angle = (Math.sin(counter/80) * 2);
+        fish1.y = (Math.sin(counter/80) * 20) + 325;
+        fish1.angle = (Math.sin(counter/80) * 2);
 
-        fish2.y = (Math.sin(counter/70) * 30) + 100;
-        fish2.scale.x = ((Math.sin(counter/150) * -.01) + -.06);
+        fish2.y = (Math.sin(counter/70) * 30) + 150;
         fish2.angle = (Math.sin(counter/40) * -2);
 
-        moveUp(fish1);
+        //Fish 1 Move
+        if ((fish1.x >= (width - (fish1.width / 2) - 50))) {
+            hitRight2 = true;
+        }
+
+        if (fish1.x <= (0 + (fish1.width / 2) + 50)) {
+            hitRight2 = false;
+        }
+
+        if (!hitRight2) {
+            fish1.x += 0.4;
+            fish1.scale.x = ((Math.sin(counter/100) * -.01) - .30);
+        }
+        else {
+            fish1.x -= 0.4;
+            fish1.scale.x = ((Math.sin(counter/100) * -.01) + .30);
+        }
+
+        //Fish 2 Move
+        if ((fish2.x >= (width - (fish2.width / 2) - 50))) {
+            hitRight1 = true;
+        }
+
+        if (fish2.x <= (0 + (fish2.width / 2) + 50)) {
+            hitRight1 = false;
+        }
+
+        if (!hitRight1) {
+            fish2.x += 1.5;
+            fish2.scale.x = ((Math.sin(counter/40) * -.004) + -.06);
+        }
+        else {
+            fish2.x -= 1.5;
+            fish2.scale.x = ((Math.sin(counter/40) * -.004) + .06);
+        }
 
         requestAnimationFrame(loop);
     }
